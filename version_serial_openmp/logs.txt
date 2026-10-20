@@ -1,0 +1,120 @@
+[*] Warming up JIT compiler...
+[+] JIT warm-up complete.
+
+[*] Forced Thread Pool Size: 8
+==================================================
+           BENCHMARKING MATRIX SIZE n = 1024
+==================================================
+
+--- Running Version 0 (Serial Baseline) ---
+  Rep 1/4: 0.2021 s
+  Rep 2/4: 0.1699 s
+  Rep 3/4: 0.1707 s
+  Rep 4/4: 0.1765 s
+  -> Version 0 Median Time: 0.1736 s
+
+--- Running Version 1 (Numba Parallel) ---
+  [p=1] Rep 1/4: 0.1640 s
+  [p=1] Rep 2/4: 0.1632 s
+  [p=1] Rep 3/4: 0.1584 s
+  [p=1] Rep 4/4: 0.1670 s
+  -> [p=1] Median: 0.1636 s | Speedup: 1.06x | Efficiency: 106.14%
+  [p=2] Rep 1/4: 0.0922 s
+  [p=2] Rep 2/4: 0.0868 s
+  [p=2] Rep 3/4: 0.0803 s
+  [p=2] Rep 4/4: 0.0898 s
+  -> [p=2] Median: 0.0883 s | Speedup: 1.97x | Efficiency: 98.35%
+  [p=4] Rep 1/4: 0.0808 s
+  [p=4] Rep 2/4: 0.0979 s
+  [p=4] Rep 3/4: 0.0894 s
+  [p=4] Rep 4/4: 0.0808 s
+  -> [p=4] Median: 0.0851 s | Speedup: 2.04x | Efficiency: 50.99%
+  [p=8] Rep 1/4: 0.0935 s
+  [p=8] Rep 2/4: 0.0845 s
+  [p=8] Rep 3/4: 0.0826 s
+  [p=8] Rep 4/4: 0.0851 s
+  -> [p=8] Median: 0.0848 s | Speedup: 2.05x | Efficiency: 25.58%
+==================================================
+           BENCHMARKING MATRIX SIZE n = 2048       
+==================================================
+
+--- Running Version 0 (Serial Baseline) ---
+  Rep 1/4: 2.7680 s
+  Rep 2/4: 2.7883 s
+  Rep 3/4: 2.7169 s
+  Rep 4/4: 2.7126 s
+  -> Version 0 Median Time: 2.7424 s
+
+--- Running Version 1 (Numba Parallel) ---
+  [p=1] Rep 1/4: 2.8910 s
+  [p=1] Rep 2/4: 2.6971 s
+  [p=1] Rep 3/4: 2.7015 s
+  [p=1] Rep 4/4: 2.7191 s
+  -> [p=1] Median: 2.7103 s | Speedup: 1.01x | Efficiency: 101.19%
+  [p=2] Rep 1/4: 1.7499 s
+  [p=2] Rep 2/4: 1.6244 s
+  [p=2] Rep 3/4: 1.6668 s
+  [p=2] Rep 4/4: 1.7399 s
+  -> [p=2] Median: 1.7034 s | Speedup: 1.61x | Efficiency: 80.50%
+  [p=4] Rep 1/4: 1.0743 s
+  [p=4] Rep 2/4: 1.1070 s
+  [p=4] Rep 3/4: 1.1340 s
+  [p=4] Rep 4/4: 1.1811 s
+  -> [p=4] Median: 1.1205 s | Speedup: 2.45x | Efficiency: 61.19%
+  [p=8] Rep 1/4: 1.0349 s
+  [p=8] Rep 2/4: 1.0391 s
+  [p=8] Rep 3/4: 1.0290 s
+  [p=8] Rep 4/4: 1.0636 s
+  -> [p=8] Median: 1.0370 s | Speedup: 2.64x | Efficiency: 33.06%
+==================================================
+           BENCHMARKING MATRIX SIZE n = 4096       
+==================================================
+
+--- Running Version 0 (Serial Baseline) ---
+  Rep 1/4: 24.3831 s
+  Rep 2/4: 23.8640 s
+  Rep 3/4: 23.8140 s
+  Rep 4/4: 24.1272 s
+  -> Version 0 Median Time: 23.9956 s
+
+--- Running Version 1 (Numba Parallel) ---
+  [p=1] Rep 1/4: 24.3742 s
+  [p=1] Rep 2/4: 23.8056 s
+  [p=1] Rep 3/4: 23.0176 s
+  [p=1] Rep 4/4: 23.2493 s
+  -> [p=1] Median: 23.5274 s | Speedup: 1.02x | Efficiency: 101.99%
+  [p=2] Rep 1/4: 13.2156 s
+  [p=2] Rep 2/4: 13.0015 s
+  [p=2] Rep 3/4: 13.7329 s
+  [p=2] Rep 4/4: 13.1031 s
+  -> [p=2] Median: 13.1594 s | Speedup: 1.82x | Efficiency: 91.17%
+  [p=4] Rep 1/4: 10.1471 s
+  [p=4] Rep 2/4: 9.9268 s
+  [p=4] Rep 3/4: 9.9573 s
+  [p=4] Rep 4/4: 9.9676 s
+  -> [p=4] Median: 9.9624 s | Speedup: 2.41x | Efficiency: 60.22%
+  [p=8] Rep 1/4: 10.4990 s
+  [p=8] Rep 2/4: 10.7644 s
+  [p=8] Rep 3/4: 10.7007 s
+  [p=8] Rep 4/4: 10.6310 s
+  -> [p=8] Median: 10.6658 s | Speedup: 2.25x | Efficiency: 28.12%
+
+[+] Results successfully saved to: matmul_v0_v1_results.csv
+
+Summary Table:
+    version    n  p  median_time  speedup  efficiency
+  v0_serial 1024  1     0.173632 1.000000    1.000000
+v1_parallel 1024  1     0.163590 1.061386    1.061386
+v1_parallel 1024  2     0.088270 1.967071    0.983536
+v1_parallel 1024  4     0.085128 2.039652    0.509913
+v1_parallel 1024  8     0.084836 2.046679    0.255835
+  v0_serial 2048  1     2.742443 1.000000    1.000000
+v1_parallel 2048  1     2.710305 1.011858    1.011858
+v1_parallel 2048  2     1.703366 1.610014    0.805007
+v1_parallel 2048  4     1.120509 2.447497    0.611874
+v1_parallel 2048  8     1.037038 2.644495    0.330562
+  v0_serial 4096  1    23.995606 1.000000    1.000000
+v1_parallel 4096  1    23.527437 1.019899    1.019899
+v1_parallel 4096  2    13.159364 1.823463    0.911731
+v1_parallel 4096  4     9.962442 2.408607    0.602152
+v1_parallel 4096  8    10.665847 2.249761    0.281220
