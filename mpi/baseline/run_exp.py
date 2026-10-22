@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 
 def run_suite():
     matrix_sizes = [1024, 2048,4096]
-    process_counts = [1, 2, 4, 8]
+    process_counts = [1, 2, 4, 8,16, 32, 64]
     reps = 4
     results = []
 

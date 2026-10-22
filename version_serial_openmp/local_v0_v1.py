@@ -1,8 +1,8 @@
 
 
 import os
-os.environ["NUMBA_NUM_THREADS"] = "8"
-os.environ["OMP_NUM_THREADS"] = "8"
+os.environ["NUMBA_NUM_THREADS"] = "64"
+os.environ["OMP_NUM_THREADS"] = "64"
 os.environ["NUMBA_THREADING_LAYER"] = "workqueue" 
 import time
 import numpy as np
@@ -53,7 +53,7 @@ def run_benchmarks():
     print(f"[*] Forced Thread Pool Size: {allocated_pool}")
 
     matrix_sizes = [1024,2048,4096]
-    thread_counts = [1, 2, 4, 8]  
+    thread_counts = [1, 2, 4, 8,16, 32, 64]  
     reps = 4
     results = []
 
