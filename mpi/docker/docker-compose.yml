@@ -1,0 +1,32 @@
+services:
+  master:
+    build: .
+    container_name: docker-master
+    hostname: docker-master
+    volumes:
+      - ./code:/home/mpiuser/code
+      - ./ssh:/ssh:ro
+    networks:
+      lan:
+        ipv4_address: 192.168.10.31
+
+  slave1:
+    build: .
+    container_name: docker-slave1
+    hostname: docker-slave1
+    volumes:
+      - ./code:/home/mpiuser/code
+      - ./ssh:/ssh:ro
+    networks:
+      lan:
+        ipv4_address: 192.168.10.32
+
+networks:
+  lan:
+    driver: macvlan
+    driver_opts:
+      parent: eth0   
+    ipam:
+      config:
+        - subnet: 192.168.10.0/24
+          gateway: 192.168.10.1
