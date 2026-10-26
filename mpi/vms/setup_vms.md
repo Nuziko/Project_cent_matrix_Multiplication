@@ -9,8 +9,8 @@ To save time, we will **configure the Master VM completely first** (installing a
 
 | Node Name | Role | Static IP | vCPUs | RAM |
 | :--- | :--- | :--- | :--- | :--- |
-| `mpi-master` | Master / Rank 0 | `192.168.10.21` | 2 | 2 GB |
-| `mpi-slave1` | Worker / Rank 1 | `192.168.10.22` | 2 | 2 GB |
+| `master` | Master / Rank 0 | `192.168.10.21` | 2 | 2 GB |
+| `slave1` | Worker / Rank 1 | `192.168.10.22` | 2 | 2 GB |
 
 * **User account (mandatory rule for MPI):** Both VMs must have the **exact same username** (e.g., `mpiuser`).
 * **Directory structure:** Both VMs will keep project files in the **exact same path** (`/home/mpiuser/hpc_project`).
@@ -37,7 +37,7 @@ To save time, we will **configure the Master VM completely first** (installing a
 
 ### 3. Configure VM Network Card (Bridged Mode)
 *Before powering on the VM:*
-1. Select `mpi-master` $\rightarrow$ Click **Settings** $\rightarrow$ **Network**.
+1. Select `master` $\rightarrow$ Click **Settings** $\rightarrow$ **Network**.
 2. Adapter 1:
    * Attached to: **Bridged Adapter**
    * Name: Select your physical network adapter (Ethernet preferred, as stated in Section 5).
@@ -50,15 +50,15 @@ To save time, we will **configure the Master VM completely first** (installing a
 
 # Phase 2: Ubuntu Server Installation
 
-1. Start `mpi-master`.
+1. Start `master`.
 2. Select your language and keyboard layout.
 3. Choose **Ubuntu Server (minimized)** when prompted (boots faster, consumes less RAM).
 4. **Network connections:** Leave DHCP for now (we set static IPs via netplan later).
 5. **Storage configuration:** Use default entire disk.
 6. **Profile Setup (IMPORTANT):**
-   * **Your name:** `mpiuser`
-   * **Your server's name:** `mpi-master`
-   * **Pick a username:** `mpiuser`
+   * **Your name:** `mpi`
+   * **Your server's name:** `mpi`
+   * **Pick a username:** `mpi`
    * **Choose a password:** `mpi123` (choose something simple, remember it).
 7. **SSH Setup:** Check **[X] Install OpenSSH server** (CRITICAL).
 8. Skip featured server snaps $\rightarrow$ Click **Done** and let the installation complete.
