@@ -1,6 +1,5 @@
 import subprocess
 import json
-import os
 import pandas as pd
 
 # ==========================================
@@ -9,27 +8,24 @@ import pandas as pd
 KERNEL = "numba"            # "numba" (main experiment) or "blas" (reference)
 MAP_BY_NODE = False         # True = spread ranks round-robin over the containers
 matrix_sizes = [1024, 2048, 4096]
-process_counts = [1, 2, 4, 8,16,32,64]
+process_counts = [1, 2, 4, 8, 16, 32, 64]   # p = 1 must come first (it is T1)
 reps = 4
 TIMEOUT = 1800              # seconds allowed for one mpirun
 
 
-
-
-
-
 def run_suite():
     results = []
+    placement_name = "spread" if MAP_BY_NODE else "default"
     csv_filename = f"mpi_benchmark_results.csv"
 
     print("==================================================================")
     print("           STARTING AUTOMATED MPI BENCHMARK SUITE                 ")
-    print(f"           kernel = {KERNEL} | placement = {tag}")
+    print(f"           kernel = {KERNEL} | placement = {placement_name}")
     print("==================================================================")
 
     for n in matrix_sizes:
         print(f"\n>>> Running for Matrix Size n = {n} <<<")
-        t1_reference = None
+        t1_reference = None   # T1 = MPI run with p = 1, same n
 
         for p in process_counts:
             if n % p != 0:
@@ -51,7 +47,7 @@ def run_suite():
                         "OPENBLAS_NUM_THREADS", "NUMBA_NUM_THREADS"]:
                 cmd += ["-x", f"{var}=1"]
             cmd += [
-                "python", "worker.py",
+                "python3", "worker.py",
                 "--n", str(n),
                 "--reps", str(reps),
                 "--kernel", KERNEL
@@ -80,7 +76,7 @@ def run_suite():
                 print(f"[-] Could not parse output for p={p}, n={n}")
                 continue
 
-            # Compute Speedup and Efficiency (reference = MPI with one rank)
+            # Speedup S = T1 / Tp and efficiency E = S / p
             if p == 1:
                 t1_reference = data["median_total"]
 
@@ -90,20 +86,11 @@ def run_suite():
             else:
                 speedup = efficiency = float("nan")
 
-            # Speedup against the serial Version 0 (only fair with the same kernel)
-            if KERNEL == "numba" and n in serial:
-                speedup_v0 = serial[n] / data["median_total"]
-                efficiency_v0 = speedup_v0 / p
-            else:
-                speedup_v0 = efficiency_v0 = float("nan")
-
-            # Calculate total communication time
+            # Total communication time = bcast + scatter + gather
             comm_time = data["bcast_median"] + data["scatter_median"] + data["gather_median"]
 
             data["speedup"] = speedup
             data["efficiency"] = efficiency
-            data["speedup_v0"] = speedup_v0
-            data["efficiency_v0"] = efficiency_v0
             data["comm_total_median"] = comm_time
             data["comm_share"] = comm_time / data["median_total"]
 
