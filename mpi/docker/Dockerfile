@@ -6,7 +6,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
  && rm -rf /var/lib/apt/lists/*
 
 RUN pip install --no-cache-dir --upgrade pip \
- && pip install --no-cache-dir numpy mpi4py pandas matplotlib
+ && pip install --no-cache-dir numpy mpi4py pandas matplotlib numba
 
 RUN useradd -m -s /bin/bash mpiuser \
  && mkdir -p /home/mpiuser/code \
